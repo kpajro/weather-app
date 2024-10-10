@@ -118,7 +118,7 @@ export function Weather(){
     }
 
     function fetchData(){
-        fetch(`http://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
         .then(response => response.json())
         .then(data => setForecast(data))
         .catch((err) => {
