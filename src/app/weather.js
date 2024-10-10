@@ -98,7 +98,7 @@ export function Weather(){
     function getUrl(img){
         const type = imageType(img)
         const url = `https://api-weather-app-eight.vercel.app/api/${type}/${img?.filename}`
-        console.log(url, type, img?.filename)
+        //console.log(url, type, img?.filename)
         return url
     }
 
@@ -118,7 +118,7 @@ export function Weather(){
     }
 
     function fetchData(){
-        fetch(`http://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
         .then(response => response.json())
         .then(data => setForecast(data))
         .catch((err) => {
@@ -178,7 +178,7 @@ export function Weather(){
             const temp = determineImage()
             const src = getUrl(temp?.[randomiser(temp.length)])
             setImagesrc(src)
-            console.log(src)
+            //console.log(src)
         }
     }, [forecast])
 
