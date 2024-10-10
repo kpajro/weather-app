@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.input-box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputfield{
+  color: black;
+  margin-top: 16px;
+}
+
+.panel{
+  width: 700px;
+  height: 300px;
+  margin-top: 16px;
+  background-color: white;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.panel p{
+  color: black;
+}
+
+.panel a{
+  color: black;
+}
+
+.interior{
+  display: flex;
+  align-items: center;
+}
+
+.mainDiv{
+  width: 100vw;
+  height: 100vh;
+}
+
+.icons{
+  padding: 8px;
+  width: 64px;
+  height: 64px;
+}
+
+.endDiv{
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.fade-in {
+  animation: fade-in 1s linear 1;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  20%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
