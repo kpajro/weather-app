@@ -1,7 +1,7 @@
 import { GenImage } from './genimage'
 
+
 export function Panel({ city, temp, overcast, overcastimg, wind, memeimg }){
-    // do dynamic rendering instead of having each section
     return(
         <div className="panel">
             <section style={{height: "inherit", width: "inherit"}}>

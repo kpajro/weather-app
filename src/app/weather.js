@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FetchButton } from './fetchButton'
 import { Panel } from './panel'
+import citiesjson from './data/cities'
 
 export function Weather(){
 
@@ -21,23 +22,6 @@ export function Weather(){
     })
 
     const [list, setList] = useState([]);
-
-    const countries = {
-        cities:[
-            {name: "Paris"},
-            {name: "Berlin"},
-            {name: "Tokyo"},
-            {name: "Madrid"},
-            {name: "Rome"},
-            {name: "Warsaw"},
-            {name: "Prague"},
-            {name: "Hong Kong"},
-            {name: "Rio de Janeiro"},
-            {name: "Amsterdam"},
-            {name: "Buenos Aires"},
-            {name: "Auckland"}
-        ]
-    }
 
     const randomiser = (max) =>{
         return Math.floor(Math.random() * max)
@@ -137,17 +121,17 @@ export function Weather(){
         const value = event.target.value;
         setCountry(value);
         if(value){
-            const filteredCountries = countries.cities.filter(item =>
-                item.name.toLowerCase().includes(value.toLowerCase())
+            const filteredCities = citiesjson.cities.filter(item =>
+                item.toLowerCase().includes(value.toLowerCase())
             );
-            setList(filteredCountries)
+            setList(filteredCities)
         } else {
             setList([])
         }
     }
 
     const ItemResponder = (item)=>{
-        setCountry(item.name);
+        setCountry(item);
         setList([]);
     }
 
@@ -213,7 +197,7 @@ export function Weather(){
                     <input className="inputfield" type="text" onChange={InputChange} value={country}></input>
                     {list.map((item, key) =>(
                         <div key={key} onClick={() => ItemResponder(item)}>
-                            {item.name}
+                            {item}
                         </div>
                     ))}
                     <FetchButton name={"Confirm"} fetchData={fetchData}/>

@@ -1,7 +1,7 @@
 {
   "name": "api-test",
   "version": "0.1.0",
-  "homepage": "https://kpajro.github.io/weather-app",
+  "homepage": "localhost:3000",
   "private": true,
   "scripts": {
     "predeploy": "npm run build",
@@ -12,11 +12,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jspdf": "^3.0.1",
     "next": "^14.2.15",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "eslint": "8.57.1",
+    "eslint-config-next": "15.3.5",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }
