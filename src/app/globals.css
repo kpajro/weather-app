@@ -29,7 +29,7 @@ body {
 .input-box{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
 
@@ -45,6 +45,14 @@ body {
   background-color: white;
   display: inline-block;
   border-radius: 4px;
+}
+
+.autocomplete-container {
+  margin-top: 2.5rem;
+  position: absolute;
+  min-height: inherit;
+  max-height: 200px;
+  background-color: rgba(0, 0, 0, 0.904);
 }
 
 .panel p{

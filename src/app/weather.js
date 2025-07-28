@@ -101,6 +101,21 @@ export function Weather(){
         }
     }
 
+    function fuzzySearch(string, q){
+        string.toLowerCase()
+        q.toLowerCase()
+
+        let i = 0, last = -1, curr = q[i]
+        while (curr){
+            if (!~(last = string.indexOf(curr, last + 1))){
+                return false
+            }
+
+            curr = q[++i]
+        }
+        return true
+    }
+
     function fetchData(){
         fetch(`https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
         .then(response => response.json())
@@ -121,9 +136,7 @@ export function Weather(){
         const value = event.target.value;
         setCountry(value);
         if(value){
-            const filteredCities = citiesjson.cities.filter(item =>
-                item.toLowerCase().includes(value.toLowerCase())
-            );
+            const filteredCities = citiesjson.cities.filter(item => fuzzySearch(item, value))
             setList(filteredCities)
         } else {
             setList([])
@@ -162,7 +175,6 @@ export function Weather(){
             const temp = determineImage()
             const src = getUrl(temp?.[randomiser(temp.length)])
             setImagesrc(src)
-            //console.log(src)
         }
     }, [forecast])
 
@@ -174,6 +186,29 @@ export function Weather(){
             window.removeEventListener("keydown", Debug)
         }*/
     }, [])
+
+    useEffect(()=> {
+        document.addEventListener('click', handleClickOutside);
+        handleAutocomplete()
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    })
+
+    const handleClickOutside = (event) => {
+        if (!event.target.closest('.autocomplete-container')) {
+          setList([]);
+        }
+      };
+
+    function handleAutocomplete(){
+        const divauto = document.getElementById("autocomplete")
+        if (divauto.children.length > 0){
+            divauto.style.overflow = "scroll"
+        } else {
+            divauto.style.overflow = "hidden" 
+        }
+    }
 
     function showForecast(){
         console.log(forecast)
@@ -195,11 +230,13 @@ export function Weather(){
                 </div>
                 <div className='input-box'>
                     <input className="inputfield" type="text" onChange={InputChange} value={country}></input>
-                    {list.map((item, key) =>(
-                        <div key={key} onClick={() => ItemResponder(item)}>
-                            {item}
-                        </div>
-                    ))}
+                    <div className='autocomplete-container' id="autocomplete">
+                        {list.map((item, key) =>(
+                            <div key={key} onClick={() => ItemResponder(item)}>
+                                {item}
+                            </div>
+                        ))}
+                    </div>
                     <FetchButton name={"Confirm"} fetchData={fetchData}/>
                     {/*{debug && <>
                         <FetchButton name={"showForecast"} fetchData={showForecast} keys={Debug}/>
