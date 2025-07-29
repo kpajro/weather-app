@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FetchButton } from './fetchButton'
+import { ModButton } from './modbutton'
 import { Panel } from './panel'
+import { SidePanel } from './forecast'
 import citiesjson from './data/cities'
 
 export function Weather(){
 
+    //================ JsVars ==================//
     let api_key = "c02994a36ef44760839110600242607"
     let port = "7174"
+    const forecastDays = 4
 
+    //================ useStates ==================//
     const [debug, setDebug] = useState(false)
     const [forecast, setForecast] = useState([]);
     const [country, setCountry] = useState('');
-
+    const [forecastPanel, setForecastPanel] = useState(false)
     const [imagesrc, setImagesrc] = useState('')
 
     const [images, setImages] = useState({
@@ -23,6 +27,12 @@ export function Weather(){
 
     const [list, setList] = useState([]);
 
+    //================ useRefs ==================//
+    const autocompleteRef = useRef()
+
+    const forecastSidePanelRef = useRef()
+
+    //================ Functions ==================//
     const randomiser = (max) =>{
         return Math.floor(Math.random() * max)
     }
@@ -102,8 +112,8 @@ export function Weather(){
     }
 
     function fuzzySearch(string, q){
-        string.toLowerCase()
-        q.toLowerCase()
+        string = string.toLowerCase()
+        q = q.toLowerCase()
 
         let i = 0, last = -1, curr = q[i]
         while (curr){
@@ -117,9 +127,10 @@ export function Weather(){
     }
 
     function fetchData(){
-        fetch(`https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}`, {method: "GET"})
+        fetch(`https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${JSON.stringify(country)}&days=${forecastDays}`, {method: "GET"})
         .then(response => response.json())
         .then(data => setForecast(data))
+        .then(console.log(forecast))
         .catch((err) => {
             console.error(err.message)
         });
@@ -162,14 +173,32 @@ export function Weather(){
             return images.normal[randomiser(images.normal.length)]
         }
     }
-    /*
-    const Debug = (e) =>{
-        if (e.key == "e"){
-            console.log("pressed")
-            setDebug(pdebug => !pdebug)
+    
+    const handleClickOutside = (event) => {
+        if (!event.target.closest('.autocomplete-container')) {
+            setList([]);
+        }
+    };
+
+    function handleAutocomplete(){
+        const divauto = autocompleteRef
+        if (divauto.current.children.length > 0){
+            divauto.current.style.overflow = "scroll"
+        } else {
+            divauto.current.style.overflow = "hidden" 
         }
     }
-    */
+
+    function openForecastPanel(){
+        const sidePanel = forecastSidePanelRef
+        if (sidePanel.current.style.display == "hidden"){
+            sidePanel.current.style.display = "none"
+        } else {
+            sidePanel.current.style.display = "hidden"
+        }
+    }
+    
+    //================ useEffects ==================//
     useEffect(() =>{
         if (forecast != null){
             const temp = determineImage()
@@ -181,10 +210,6 @@ export function Weather(){
     useEffect(() =>{
         setCountry('');
         Fetcher()
-        /*window.addEventListener("keydown", Debug)
-        return () =>{
-            window.removeEventListener("keydown", Debug)
-        }*/
     }, [])
 
     useEffect(()=> {
@@ -195,49 +220,24 @@ export function Weather(){
         };
     })
 
-    const handleClickOutside = (event) => {
-        if (!event.target.closest('.autocomplete-container')) {
-          setList([]);
-        }
-      };
-
-    function handleAutocomplete(){
-        const divauto = document.getElementById("autocomplete")
-        if (divauto.children.length > 0){
-            divauto.style.overflow = "scroll"
-        } else {
-            divauto.style.overflow = "hidden" 
-        }
-    }
-
-    function showForecast(){
-        console.log(forecast)
-        console.log(forecast?.location?.name)
-        console.log(imagesrc)
-    }
-
-    function testFunction(){
-        const temp = determineImage()
-        getUrl(temp?.[randomiser(temp.length)])
-    }
-
     return(
-        <div>
+        <div style={{ display: "flex"}}>
             <div className='mainDiv'>
                 <div className='endDiv'>
                     <Panel city={forecast?.location?.name} temp={forecast?.current?.temp_c} overcast={forecast?.current?.condition?.text} overcastimg={forecast?.current?.condition?.icon} wind={forecast?.current?.wind_kph}
                     memeimg={imagesrc} />
+                    <ModButton _text={">"} _function={openForecastPanel} _buttonclass="button-forecastsidepanel" _title={"Forecast Side Panel"} _divstyle={{display: "flex", flexDirection: "column", justifyContent: "center"}}/>
                 </div>
                 <div className='input-box'>
-                    <input className="inputfield" type="text" onChange={InputChange} value={country}></input>
-                    <div className='autocomplete-container' id="autocomplete">
+                    <input className="inputfield" placeholder='ex. Warsaw, Beijing, Tokyo' type="text" onChange={InputChange} value={country}></input>
+                    <div className='autocomplete-container' id="autocomplete" ref={autocompleteRef}>
                         {list.map((item, key) =>(
                             <div key={key} onClick={() => ItemResponder(item)}>
                                 {item}
                             </div>
                         ))}
                     </div>
-                    <FetchButton name={"Confirm"} fetchData={fetchData}/>
+                    <ModButton _text={"Confirm"} _function={fetchData}/>
                     {/*{debug && <>
                         <FetchButton name={"showForecast"} fetchData={showForecast} keys={Debug}/>
                         <FetchButton name={"test Function"} fetchData={testFunction} />
@@ -245,6 +245,7 @@ export function Weather(){
                     </>*/}
                 </div>
             </div>
+            <SidePanel ref={forecastSidePanelRef}/>
         </div>
     )
 }

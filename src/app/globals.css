@@ -85,6 +85,14 @@ body {
   justify-content: center;
 }
 
+.button-forecastsidepanel {
+  border-width: 4px;
+  border-style: double;
+  border-left: 0px;
+  border-radius: 16px;
+  border-color: white;
+}
+
 .fade-in {
   animation: fade-in 1s linear 1;
 }
