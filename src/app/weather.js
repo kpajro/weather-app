@@ -189,12 +189,11 @@ export function Weather(){
         }
     }
 
-    function openForecastPanel(){
-        const sidePanel = forecastSidePanelRef
-        if (sidePanel.current.style.display == "hidden"){
-            sidePanel.current.style.display = "none"
+    const openForecastPanel = () => {
+        if(forecastSidePanelRef.current.style.display == "none") {
+            forecastSidePanelRef.current.style.display = "flex"
         } else {
-            sidePanel.current.style.display = "hidden"
+            forecastSidePanelRef.current.style.display = "none"
         }
     }
     
