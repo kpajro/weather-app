@@ -85,6 +85,47 @@ body {
   justify-content: center;
 }
 
+.forecast-sidepanel {
+  width: 50vw;
+  height: 90vh;
+  background-color: white;
+  overflow: hidden;
+}
+
+.forecast-sidepanel p {
+  color: black;
+}
+
+.forecast-sidepanel.hidden {
+  display: "none";
+}
+
+@keyframes open-sidepanel {
+  0% {
+    width: 0vw;
+  }
+  100% {
+    width: 50vw;
+  }
+}
+
+.open-sidepanel {
+  animation: open-sidepanel 0.5s ease-in-out;
+}
+
+@keyframes close-sidepanel {
+  0% {
+    width: 50vw;
+  }
+  100% {
+    width: 0vw;
+  }
+}
+
+.close-sidepanel {
+  animation: close-sidepanel 0.5s ease-in-out
+}
+
 .button-forecastsidepanel {
   border-width: 4px;
   border-style: double;

@@ -188,12 +188,26 @@ export function Weather(){
             divauto.current.style.overflow = "hidden" 
         }
     }
+    // this is so bad but i don't know any other solution
+    function toggleSidePanelDisplay(){
+        const forecastpanel = forecastSidePanelRef.current
+        if (forecastpanel.classList.contains("close-sidepanel")) {
+            forecastpanel.classList.add("hidden");
+        }
+        forecastpanel.removeEventListener("animationend", toggleSidePanelDisplay);
+    }
 
     const openForecastPanel = () => {
-        if(forecastSidePanelRef.current.style.display == "none") {
-            forecastSidePanelRef.current.style.display = "flex"
+        const forecastpanel = forecastSidePanelRef.current
+
+        if (forecastpanel.classList.contains("open-sidepanel")) {
+            forecastpanel.classList.remove("open-sidepanel");
+            forecastpanel.classList.add("close-sidepanel");
+            forecastpanel.addEventListener("animationend", toggleSidePanelDisplay);
         } else {
-            forecastSidePanelRef.current.style.display = "none"
+            forecastpanel.classList.remove("hidden");
+            forecastpanel.classList.remove("close-sidepanel");
+            forecastpanel.classList.add("open-sidepanel");
         }
     }
     
