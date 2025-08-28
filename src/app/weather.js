@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { ModButton } from './modbutton'
 import { Panel } from './panel'
-import { SidePanel } from './forecast'
+import { SidePanel } from './sidepanel'
 import citiesjson from './data/cities'
 
 export function Weather(){
-
+    // @Rev -> add more images !!!!!
     //================ JsVars ==================//
-    let api_key = "c02994a36ef44760839110600242607"
-    let port = "7174"
-    const forecastDays = 4
+    let api_key = "c02994a36ef44760839110600242607" // @Rev -> this is so shit, have to put in .env, lazy
+    let port = "7174" // @Rev -> same thing
+    const forecastDays = 3 // @Rev -> Make more settings?
 
     //================ useStates ==================//
     const [debug, setDebug] = useState(false)
@@ -41,6 +41,7 @@ export function Weather(){
         
     } 
 
+    // @Rev -> make the backend api more secure? API keys?
     const fetchHot = async ()=>{
         await fetch(`https://api-weather-app-eight.vercel.app/api/hot`, {method: "GET"})
         .then(response => response.json())
@@ -95,7 +96,7 @@ export function Weather(){
         //console.log(url, type, img?.filename)
         return url
     }
-
+    // @Rev -> enums?
     function imageType(img){
         if(img?.filename.toLowerCase().includes("h")){
             return "hot"
@@ -188,7 +189,7 @@ export function Weather(){
             divauto.current.style.overflow = "hidden" 
         }
     }
-    // this is so bad but i don't know any other solution
+
     function toggleSidePanelDisplay(){
         const forecastpanel = forecastSidePanelRef.current
         if (forecastpanel.classList.contains("close-sidepanel")) {
@@ -237,7 +238,7 @@ export function Weather(){
         <div style={{ display: "flex"}}>
             <div className='mainDiv'>
                 <div className='endDiv'>
-                    <Panel city={forecast?.location?.name} temp={forecast?.current?.temp_c} overcast={forecast?.current?.condition?.text} overcastimg={forecast?.current?.condition?.icon} wind={forecast?.current?.wind_kph}
+                    <Panel city={forecast?.location?.name} temp={forecast?.current?.temp_c} humidity={forecast?.current?.humidity} overcast={forecast?.current?.condition?.text} overcastimg={forecast?.current?.condition?.icon} wind={forecast?.current?.wind_kph}
                     memeimg={imagesrc} />
                     <ModButton _text={">"} _function={openForecastPanel} _buttonclass="button-forecastsidepanel" _title={"Forecast Side Panel"} _divstyle={{display: "flex", flexDirection: "column", justifyContent: "center"}}/>
                 </div>
@@ -251,14 +252,9 @@ export function Weather(){
                         ))}
                     </div>
                     <ModButton _text={"Confirm"} _function={fetchData}/>
-                    {/*{debug && <>
-                        <FetchButton name={"showForecast"} fetchData={showForecast} keys={Debug}/>
-                        <FetchButton name={"test Function"} fetchData={testFunction} />
-                    }
-                    </>*/}
                 </div>
             </div>
-            <SidePanel ref={forecastSidePanelRef}/>
+            <SidePanel _forecast={forecast?.forecast} ref={forecastSidePanelRef}/>
         </div>
     )
 }

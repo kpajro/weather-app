@@ -1,14 +1,9 @@
 import { GenImage } from './genimage'
 
-
-export function Panel({ city, temp, overcast, overcastimg, wind, memeimg }){
+export function Panel({ city, temp, humidity, overcast, overcastimg, wind, memeimg }){
     return(
         <div className="panel">
-            <section style={{height: "inherit", width: "inherit"}}>
-                <div style={{height: "inherit", width: "inherit", position: "absolute", display: "flex", justifyContent: "flex-end"}}>
-                    {city ? <GenImage memeimg={memeimg} /> : ""}
-                </div>
-                <h4 className='fade-in' style={{color: "black", textAlign: "center", fontSize: "24px"}}>{city ? "" : "Type in a city name and you will know the weather!"}</h4>
+            <div>
                 <div className="interior">
                     {city && 
                         <img className="icons" src="./plaza.png" />
@@ -18,6 +13,12 @@ export function Panel({ city, temp, overcast, overcastimg, wind, memeimg }){
                 <div className="interior">
                     <img src={overcastimg} />
                     <a>{overcast ? overcast : ''}</a>
+                </div>
+                <div className="interior">
+                    { humidity && 
+                        <img className="icons" src="./humidity.png" />
+                    }
+                    <a>{humidity ? humidity + '%' : ''}</a>
                 </div>
                 <div className="interior">
                     {wind &&
@@ -31,7 +32,11 @@ export function Panel({ city, temp, overcast, overcastimg, wind, memeimg }){
                     }
                     <a>{temp ? temp + ' °C' : ''}</a>
                 </div>
-            </section>
+            </div>
+            <div>
+                {city ? <GenImage memeimg={memeimg} /> : ""}
+            </div>
+            <h4 className='fade-in' style={{color: "black", textAlign: "center", fontSize: "24px"}}>{city ? "" : "Type in a city name and you will know the weather!"}</h4>
         </div>
     )
 }

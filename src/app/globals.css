@@ -39,11 +39,11 @@ body {
 }
 
 .panel{
-  width: 700px;
-  height: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(1, 1fr);
   margin-top: 16px;
   background-color: white;
-  display: inline-block;
   border-radius: 4px;
 }
 
@@ -90,6 +90,27 @@ body {
   height: 90vh;
   background-color: white;
   overflow: hidden;
+}
+
+.forecast-sidepanel-column-panels {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.forecast-module {
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  grid-template-rows: 1fr;
+}
+
+.fill {
+  height: 100%;
+  width: 100%;
+}
+
+.center {
+  text-align: center;
 }
 
 .forecast-sidepanel p {
