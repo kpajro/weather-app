@@ -95,13 +95,17 @@ body {
 .forecast-sidepanel-column-panels {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
 }
 
 .forecast-module {
   display: grid;
-  grid-template-columns: repeat(1fr);
-  grid-template-rows: 1fr;
+  grid-template-rows: repeat(1.5, 1fr);
+}
+
+.forecast-module-information {
+  display: grid;
+  grid-template-rows: 0fr;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .fill {
