@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const deploy = false
+const deploy = true
 const nextConfig = {
     basePath: "",
     output: "export",

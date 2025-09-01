@@ -9,3 +9,5 @@ export const SidePanel = forwardRef(({_forecast = {}}, ref) =>{
     )
 })
 
+SidePanel.displayName = "SidePanel"
+

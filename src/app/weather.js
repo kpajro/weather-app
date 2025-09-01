@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { ModButton } from './modbutton'
 import { Panel } from './panel'
 import { SidePanel } from './sidepanel'
@@ -90,12 +90,12 @@ export function Weather(){
         })
     }
 
-    function getUrl(img){
+    const getUrl = useCallback((img)=>{
         const type = imageType(img)
         const url = `https://api-weather-app-eight.vercel.app/api/${type}/${img?.filename}`
         //console.log(url, type, img?.filename)
         return url
-    }
+    }, [])
     // @Rev -> enums?
     function imageType(img){
         if(img?.filename.toLowerCase().includes("h")){
@@ -137,13 +137,6 @@ export function Weather(){
         });
     }
     
-    function Fetcher(){
-        fetchHot()
-        fetchCold()
-        fetchRainy()
-        fetchNormal()
-    }
-    
     const InputChange = (event)=>{
         const value = event.target.value;
         setCountry(value);
@@ -160,7 +153,7 @@ export function Weather(){
         setList([]);
     }
 
-    function determineImage(){
+    const determineImage = useCallback(() =>{
         const temp = forecast?.current?.temp_c
         const rainy = forecast?.forecast?.forecastday[0]?.day?.daily_will_it_rain
         if (rainy){
@@ -173,7 +166,7 @@ export function Weather(){
         } else {
             return images.normal[randomiser(images.normal.length)]
         }
-    }
+    }, [forecast, images])
     
     const handleClickOutside = (event) => {
         if (!event.target.closest('.autocomplete-container')) {
@@ -219,11 +212,14 @@ export function Weather(){
             const src = getUrl(temp?.[randomiser(temp.length)])
             setImagesrc(src)
         }
-    }, [forecast])
+    }, [forecast, determineImage, getUrl])
 
     useEffect(() =>{
         setCountry('');
-        Fetcher()
+        fetchHot()
+        fetchCold()
+        fetchRainy()
+        fetchNormal()
     }, [])
 
     useEffect(()=> {
