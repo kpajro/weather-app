@@ -86,26 +86,49 @@ body {
 }
 
 .forecast-sidepanel {
-  width: 50vw;
+  width: 30vw;
   height: 90vh;
   background-color: white;
   overflow: hidden;
 }
 
-.forecast-sidepanel-column-panels {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
 .forecast-module {
-  display: grid;
-  grid-template-rows: repeat(1.5, 1fr);
+  border: solid;
+  border-width: 4px;
+  border-color: black;
+  border-left: 0;
+  border-right: 0;
 }
 
 .forecast-module-information {
   display: grid;
   grid-template-rows: 0fr;
   grid-template-columns: repeat(3, 1fr);
+}
+
+.forecast-buttons-border {
+  border: solid;
+  border-width: 1px;
+  border-color: black;
+  cursor: pointer;
+}
+
+.forecast-module-information-border {
+  border: solid;
+  border-width: 0.5px;
+  border-color: rgba(128, 128, 128, 0.089);
+}
+
+.forecast-buttons-border:hover {
+  background-color: gray;
+}
+
+.forecast-module-information-disposition {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .fill {
@@ -126,11 +149,11 @@ body {
 }
 
 @keyframes open-sidepanel {
-  0% {
-    width: 0vw;
+  from {
+    flex-basis: 0;
   }
-  100% {
-    width: 50vw;
+  to {
+    flex-basis: 30vw;
   }
 }
 
@@ -139,11 +162,11 @@ body {
 }
 
 @keyframes close-sidepanel {
-  0% {
-    width: 50vw;
+  from {
+    flex-basis: 30vw;
   }
-  100% {
-    width: 0vw;
+  to {
+    flex-basis: 0;
   }
 }
 

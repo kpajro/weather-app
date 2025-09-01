@@ -9,41 +9,41 @@ export function ForecastModule({_list = []}){
     }
     useEffect(()=>{
         setList(_list)
-    }, [_list.length])
+    }, [_list])
     return (
-        <section className='forecast-sidepanel-column-panels fill'>
+        <section>
             <div className="forecast-module">
                 <div className='forecast-module-information'>
                 {
                     selected && (<>
-                        <div>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
                             <img className="icons" src={selected.day.condition.icon}/>
                             <p>{selected.day.condition.text}</p>
                         </div>
-                        <div>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
                             <img className="icons" src="./humidity.png"/>
                             <p>{selected.day.avghumidity}</p>
                         </div>
-                        <div>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
                             <img className="icons" src="./wind.png"/>
                             <p>{selected.day.maxwind_kph}</p>
                         </div>
-                        <div>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
                             <img className="icons" src='./temp.png'/>
-                            <p>{selected.day.avgtemp_c}</p>
+                            <p>Avg: {selected.day.avgtemp_c}</p>
                         </div>
-                        <div>
-                            <p>{selected.day.mintemp_c}</p>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
+                            <p>Min: {selected.day.mintemp_c}</p>
                         </div>
-                        <div>
-                            <p>{selected.day.maxtemp_c}</p>
+                        <div className='forecast-module-information-disposition forecast-module-information-border'>
+                            <p>Max: {selected.day.maxtemp_c}</p>
                         </div>
                     </>
                 )}
                 </div>
                 <div className='forecast-module-information'>
-                    {list.map((item)=>{
-                        return <p key={item.date_epoch} onClick={()=>getSelected(item)}>{item.date}</p>
+                    {list?.forecastday?.map((item)=>{
+                        return <p className='center forecast-buttons-border' key={item.date_epoch} onClick={()=>getSelected(item)}>{item.date}</p>
                     })}
                 </div>
             </div>

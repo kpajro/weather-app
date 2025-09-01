@@ -240,10 +240,10 @@ export function Weather(){
                 <div className='endDiv'>
                     <Panel city={forecast?.location?.name} temp={forecast?.current?.temp_c} humidity={forecast?.current?.humidity} overcast={forecast?.current?.condition?.text} overcastimg={forecast?.current?.condition?.icon} wind={forecast?.current?.wind_kph}
                     memeimg={imagesrc} />
-                    <ModButton _text={">"} _function={openForecastPanel} _buttonclass="button-forecastsidepanel" _title={"Forecast Side Panel"} _divstyle={{display: "flex", flexDirection: "column", justifyContent: "center"}}/>
+                    <ModButton _text={">"} _function={openForecastPanel} _buttonclass="button-forecastsidepanel fade-in" _title={"Forecast Side Panel"} _divstyle={{display: "flex", flexDirection: "column", justifyContent: "center"}}/>
                 </div>
                 <div className='input-box'>
-                    <input className="inputfield" placeholder='ex. Warsaw, Beijing, Tokyo' type="text" onChange={InputChange} value={country}></input>
+                    <input className="inputfield fade-in" placeholder='ex. Warsaw, Beijing, Tokyo' type="text" onChange={InputChange} value={country}></input>
                     <div className='autocomplete-container' id="autocomplete" ref={autocompleteRef}>
                         {list.map((item, key) =>(
                             <div key={key} onClick={() => ItemResponder(item)}>
@@ -251,7 +251,7 @@ export function Weather(){
                             </div>
                         ))}
                     </div>
-                    <ModButton _text={"Confirm"} _function={fetchData}/>
+                    <ModButton _text={"Confirm"} _function={fetchData} _buttonclass='fade-in'/>
                 </div>
             </div>
             <SidePanel _forecast={forecast?.forecast} ref={forecastSidePanelRef}/>
